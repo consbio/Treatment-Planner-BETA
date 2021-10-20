@@ -22,15 +22,11 @@ $RECYCLE.BIN/
 # Operating System Files
 # =========================
 
-*.out
-*.key
-Data
-Docs
-MXD
-Software
-*.accdb
+#*.out
+#*.key
+#Data
+#Docs
+#MXD
+#*.accdb
 Archive
-workspace
-*.out
-EEMS
-FVS_Workspace_Testing
+#EEMS
