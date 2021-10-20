@@ -44,10 +44,12 @@ class Run_Simulation(object):
         param1 = arcpy.Parameter(
             displayName='FVS Database',
             name='fvs_database',
+            #datatype='String',
             datatype='DEFile',
         )
-        #param1.value = r'F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\TreatmentPlanner_dev\Data\Inputs\FVS_Databases\LakeGillette.accdb'
-        param1.value = r'F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\FVS_Databases\ShaverLake.accdb'
+        # This will create a dropdown of all the files in the FVS_Databases folder (must also use datatype='String' above), but no option to browse to another. May cause confusion in tutorial, and less flexible.  
+        #param1.filter.list = [os.path.dirname(os.path.realpath(__file__)) + '\Data\Inputs\FVS_Databases' + os.sep + db for db in os.listdir(os.path.dirname(os.path.realpath(__file__)) + '\Data\Inputs\FVS_Databases')]
+        param1.value = os.path.dirname(os.path.realpath(__file__)) + '\Data\Inputs\FVS_Databases\ShaverLake.accdb'
 
         param2 = arcpy.Parameter(
             displayName='Number of Years to Simulate',
@@ -432,9 +434,9 @@ STOP".format(input_stand_id, num_years, fvs_database, management_action_code, ou
 
             # AddToolbox only works on system toolboxes or toolboxes that have already been added to ArcToolbox in the mxd.
             #tbx = arcpy.AddToolbox(workspace + "//EEMS/EEMS_Models.tbx")
-            tbx = arcpy.ImportToolbox(workspace + "//EEMS/EEMS_Models.tbx")
-            eems_command_file_dir = workspace + "//Data//Intermediate//EEMS_Command_Files//"
-            eems_lyr_dir = workspace + "//Data//Outputs//lyr//"
+            tbx = arcpy.ImportToolbox(workspace + "\\EEMS\\EEMS_Models.tbx")
+            eems_command_file_dir = workspace + "\\Data\\Intermediate\\EEMS_Command_Files\\"
+            eems_lyr_dir = workspace + "\\Data\\Outputs\\lyr\\"
 
             arcpy.AddMessage("\nRunning EEMS " + eems_model + " Model...")
             eems_command_file = eems_command_file_dir + eems_model.replace(" ", "_") + ".mpt"
