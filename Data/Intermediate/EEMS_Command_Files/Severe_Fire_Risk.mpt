@@ -1,0 +1,163 @@
+SW = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = SW,
+    DataType = Float,
+    Metadata = [
+        DisplayName: SW,
+        ColorMap: binary
+    ]
+)
+Southwestness_is_High_Fz = CvtToFuzzy(
+    InFieldName = SW,
+    FalseThreshold = -0.54,
+    TrueThreshold = 0.6,
+    Metadata = [
+        DisplayName: Southwestness&nbsp;Is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)
+Insol = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = Insol,
+    DataType = Float,
+    Metadata = [
+        DisplayName: Insol,
+        ColorMap: binary
+    ]
+)
+High_Insol_Fz = CvtToFuzzy(
+    InFieldName = Insol,
+    FalseThreshold = 1.06,
+    TrueThreshold = 3.92,
+    Metadata = [
+        DisplayName: High&nbsp;Insol&nbsp;Fz,
+        ColorMap: RdYlBu_r
+    ]
+)
+Solar_Exposure_is_High_Fz = FuzzyAnd(
+    InFieldNames = [Southwestness_is_High_Fz,High_Insol_Fz],
+    Metadata = [
+        DisplayName: Solar&nbsp;Exposure&nbsp;is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)
+Slope = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = Slope,
+    DataType = Float,
+    Metadata = [
+        DisplayName: Slope,
+        ColorMap: binary
+    ]
+)
+Slope_is_High_Fz = CvtToFuzzy(
+    InFieldName = Slope,
+    FalseThreshold = 7.32,
+    TrueThreshold = 33.6,
+    Metadata = [
+        DisplayName: Slope&nbsp;Is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)
+Topography_is_Conducive_to_Fire_Fz = FuzzyWeightedUnion(
+    InFieldNames = [Solar_Exposure_is_High_Fz,Slope_is_High_Fz],
+    Weights = [0.6,0.4],
+    Metadata = [
+        DisplayName: Topography&nbsp;Is&nbsp;Conducive&nbsp;To&nbsp;Fire,
+        ColorMap: RdYlBu_r
+    ]
+)
+BA_2019 = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = BA_2019,
+    DataType = Float,
+    Metadata = [
+        DisplayName: BA&nbsp;2019,
+        ColorMap: binary
+    ]
+)
+Low_BA_2019_Fz = CvtToFuzzy(
+    InFieldName = BA_2019,
+    FalseThreshold = 128.81,
+    TrueThreshold = 10.09,
+    Metadata = [
+        DisplayName: Low&nbsp;Ba&nbsp;2019&nbsp;Fz,
+        ColorMap: RdYlBu_r
+    ]
+)
+Tpa_2019 = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = Tpa_2019,
+    DataType = Float,
+    Metadata = [
+        DisplayName: Tpa&nbsp;2019,
+        ColorMap: binary
+    ]
+)
+Tree_Density_is_High_Fz = CvtToFuzzy(
+    InFieldName = Tpa_2019,
+    FalseThreshold = 294.78,
+    TrueThreshold = 2364.54,
+    Metadata = [
+        DisplayName: Tree&nbsp;Density&nbsp;Is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)
+Small_Tree_Fuel_Load_is_High_Fz = FuzzyAnd(
+    InFieldNames = [Low_BA_2019_Fz,Tree_Density_is_High_Fz],
+    Metadata = [
+        DisplayName: Small&nbsp;Tree&nbsp;Fuel&nbsp;Load&nbsp;Is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)
+Sdi_2019 = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = Sdi_2019,
+    DataType = Float,
+    Metadata = [
+        DisplayName: Sdi&nbsp;2019,
+        ColorMap: binary
+    ]
+)
+Stand_Density_Index_is_High_Fz = CvtToFuzzy(
+    InFieldName = Sdi_2019,
+    FalseThreshold = 43.65,
+    TrueThreshold = 332.57,
+    Metadata = [
+        DisplayName: Stand&nbsp;Density&nbsp;Index&nbsp;Is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)
+CCF_2019 = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = CCF_2019,
+    DataType = Float,
+    Metadata = [
+        DisplayName: CCF&nbsp;2019,
+        ColorMap: binary
+    ]
+)
+Crown_Competition_Is_High_Fz = CvtToFuzzy(
+    InFieldName = CCF_2019,
+    FalseThreshold = 10.35,
+    TrueThreshold = 129.63,
+    Metadata = [
+        DisplayName: Crown&nbsp;Competition&nbsp;Is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)
+Structure_is_Conducive_to_Fire_Fz = FuzzyOr(
+    InFieldNames = [Small_Tree_Fuel_Load_is_High_Fz,Stand_Density_Index_is_High_Fz,Crown_Competition_Is_High_Fz],
+    Metadata = [
+        DisplayName: Structure&nbsp;Is&nbsp;Conducive&nbsp;To&nbsp;Fire,
+        ColorMap: RdYlBu_r
+    ]
+)
+High_Severe_Fire_Risk_Fz = FuzzyWeightedUnion(
+    InFieldNames = [Topography_is_Conducive_to_Fire_Fz,Structure_is_Conducive_to_Fire_Fz],
+    Weights = [0.2,0.8],
+    Metadata = [
+        DisplayName: High&nbsp;Severe&nbsp;Fire&nbsp;Risk,
+        ColorMap: RdYlBu_r
+    ]
+)
