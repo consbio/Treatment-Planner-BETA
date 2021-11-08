@@ -1,0 +1,118 @@
+Tpa_2019 = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = Tpa_2019,
+    DataType = Float,
+    Metadata = [
+        DisplayName: Trees&nbsp;Per&nbsp;Acre,
+        ColorMap: binary
+    ]
+)
+High_Tpa_2019_Fz = CvtToFuzzy(
+    InFieldName = Tpa_2019,
+    FalseThreshold = 1000.0,
+    TrueThreshold = 1500.0,
+    Metadata = [
+        DisplayName: High&nbsp;Tpa&nbsp;2019&nbsp;Fz,
+        ColorMap: RdYlBu_r
+    ]
+)
+BA_2019 = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = BA_2019,
+    DataType = Float,
+    Metadata = [
+        DisplayName: Basal&nbsp;Area,
+        ColorMap: binary
+    ]
+)
+High_BA_2019_Fz = CvtToFuzzy(
+    InFieldName = BA_2019,
+    FalseThreshold = 100.0,
+    TrueThreshold = 300.0,
+    Metadata = [
+        DisplayName: High&nbsp;Ba&nbsp;2019&nbsp;Fz,
+        ColorMap: RdYlBu_r
+    ]
+)
+Calculated_Density_is_High_Fz = FuzzyAnd(
+    InFieldNames = [High_Tpa_2019_Fz,High_BA_2019_Fz],
+    Metadata = [
+        DisplayName: Calculated&nbsp;Density&nbsp;Is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)
+Sdi_2019 = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = Sdi_2019,
+    DataType = Float,
+    Metadata = [
+        DisplayName: Stand&nbsp;Density&nbsp;Index,
+        ColorMap: binary
+    ]
+)
+Stand_Density_is_High_Fz = CvtToFuzzy(
+    InFieldName = Sdi_2019,
+    FalseThreshold = 100.0,
+    TrueThreshold = 300.0,
+    Metadata = [
+        DisplayName: Stand&nbsp;Density&nbsp;Is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)
+Density_is_High_Fz = FuzzyOr(
+    InFieldNames = [Calculated_Density_is_High_Fz,Stand_Density_is_High_Fz],
+    Metadata = [
+        DisplayName: Density&nbsp;Is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)
+Age_2019 = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = Age_2019,
+    DataType = Integer,
+    Metadata = [
+        DisplayName: Stand&nbsp;Age,
+        ColorMap: binary
+    ]
+)
+Is_Not_Old_Growth_Fz = CvtToFuzzy(
+    InFieldName = Age_2019,
+    FalseThreshold = 100.0,
+    TrueThreshold = 99.99,
+    Metadata = [
+        DisplayName: Is&nbsp;Not&nbsp;Old&nbsp;Growth,
+        ColorMap: RdYlBu_r
+    ]
+)
+Needs_Thinning_Fz = FuzzyAnd(
+    InFieldNames = [Density_is_High_Fz,Is_Not_Old_Growth_Fz],
+    Metadata = [
+        DisplayName: Needs&nbsp;Thinning,
+        ColorMap: RdYlBu_r
+    ]
+)
+MCuFt_2019 = EEMSRead(
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFieldName = MCuFt_2019,
+    DataType = Float,
+    Metadata = [
+        DisplayName: Merchantable&nbsp;Board&nbsp;Feet&nbsp;Volume,
+        ColorMap: binary
+    ]
+)
+Economic_Value_is_High_Fz = CvtToFuzzy(
+    InFieldName = MCuFt_2019,
+    FalseThreshold = 500.0,
+    TrueThreshold = 5000.0,
+    Metadata = [
+        DisplayName: Economic&nbsp;Value&nbsp;Is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)
+Thinning_Value_is_High_Fz = FuzzyAnd(
+    InFieldNames = [Needs_Thinning_Fz,Economic_Value_is_High_Fz],
+    Metadata = [
+        DisplayName: Thinning&nbsp;Value&nbsp;Is&nbsp;High,
+        ColorMap: RdYlBu_r
+    ]
+)

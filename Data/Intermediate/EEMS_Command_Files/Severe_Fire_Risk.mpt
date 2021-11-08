@@ -1,5 +1,5 @@
 SW = EEMSRead(
-    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
     InFieldName = SW,
     DataType = Float,
     Metadata = [
@@ -17,7 +17,7 @@ Southwestness_is_High_Fz = CvtToFuzzy(
     ]
 )
 Insol = EEMSRead(
-    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
     InFieldName = Insol,
     DataType = Float,
     Metadata = [
@@ -42,7 +42,7 @@ Solar_Exposure_is_High_Fz = FuzzyAnd(
     ]
 )
 Slope = EEMSRead(
-    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
     InFieldName = Slope,
     DataType = Float,
     Metadata = [
@@ -68,7 +68,7 @@ Topography_is_Conducive_to_Fire_Fz = FuzzyWeightedUnion(
     ]
 )
 BA_2019 = EEMSRead(
-    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
     InFieldName = BA_2019,
     DataType = Float,
     Metadata = [
@@ -86,7 +86,7 @@ Low_BA_2019_Fz = CvtToFuzzy(
     ]
 )
 Tpa_2019 = EEMSRead(
-    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
     InFieldName = Tpa_2019,
     DataType = Float,
     Metadata = [
@@ -111,7 +111,7 @@ Small_Tree_Fuel_Load_is_High_Fz = FuzzyAnd(
     ]
 )
 Sdi_2019 = EEMSRead(
-    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
     InFieldName = Sdi_2019,
     DataType = Float,
     Metadata = [
@@ -129,7 +129,7 @@ Stand_Density_Index_is_High_Fz = CvtToFuzzy(
     ]
 )
 CCF_2019 = EEMSRead(
-    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA1\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
+    InFileName = F:\Projects2\USFS-052_PSW_Forest_Treatment_Planner_2019_mike_gough\Tasks\FVS_Arc_4_Box_model\Tools\Treatment_Planner_BETA\Data\Inputs\Stands.gdb\Shaver_Lake_Forest_Stands,
     InFieldName = CCF_2019,
     DataType = Float,
     Metadata = [

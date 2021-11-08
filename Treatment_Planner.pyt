@@ -96,7 +96,15 @@ class Run_Simulation(object):
         )
         param6.filter.list = ["Severe Fire Risk", "Thinning Assessment"]
 
-        params = [param0, param1, param2, param3, param4, param5, param6]
+        param7 = arcpy.Parameter(
+            displayName='EEMS Model Output Feature Class',
+            name='eems_model_output_feature_class',
+            datatype='String',
+            parameterType='Optional',
+            category="Post-Processing Options"
+        )
+
+        params = [param0, param1, param2, param3, param4, param5, param6, param7]
         return params
 
     def isLicensed(self):
@@ -107,14 +115,19 @@ class Run_Simulation(object):
         """Modify the values and properties of parameters before internal
         validation is performed.  This method is called whenever a parameter
         has been changed."""
-        
+
+        # Set the workspace to the ArcFVS directory. Based on the location of this python script.
+        workspace = os.path.dirname(os.path.realpath(__file__))
+        # Output location for EEMS Output Feature Class.
+        output_gdb = workspace + "\\Data\\Outputs\\Outputs.gdb"
+
         # Check the fields needed to run the selected EEMS model.
         if parameters[6].value == "Thinning Assessment":
-            required_inputs_list = ["Stand Age", "Trees per acre (Tpa)", "Basal area per acre (BA)", "Stand density index (Sdi)",
-                                    "Merchantable cuft volume (MCuFt)"]
+            required_inputs_list = ["Stand Age", "Trees per acre (Tpa)", "Basal area per acre (BA)", "Stand density index (Sdi)", "Merchantable cuft volume (MCuFt)"]
+
         elif parameters[6].value == "Severe Fire Risk":
-            required_inputs_list = ["Stand Age", "Trees per acre (Tpa)", "Basal area per acre (BA)", "Stand density index (Sdi)",
-                                    "Crown competition factor (CCF)"]
+            required_inputs_list = ["Stand Age", "Trees per acre (Tpa)", "Basal area per acre (BA)", "Stand density index (Sdi)", "Crown competition factor (CCF)"]
+            
         if parameters[6].value:
             if parameters[3].value:
                 selected_value_list = str(parameters[3].value).strip().replace("'", "").split(";")
@@ -122,6 +135,9 @@ class Run_Simulation(object):
                 parameters[3].value = unique_list
             else:
                 parameters[3].value = required_inputs_list
+                
+            if parameters[6].altered and not parameters[6].hasBeenValidated:
+                parameters[7].value = output_gdb + "\\" + parameters[6].value.replace(" ", "_")
 
         # Set the Year, and the Advanced Settings based on the selected action.
         if not parameters[4].hasBeenValidated and parameters[4].value:
@@ -440,17 +456,22 @@ STOP".format(input_stand_id, num_years, fvs_database, management_action_code, ou
 
             arcpy.AddMessage("\nRunning EEMS " + eems_model + " Model...")
             eems_command_file = eems_command_file_dir + eems_model.replace(" ", "_") + ".mpt"
-
+            eems_output_feature_class = parameters[7].valueAsText
+            
             if eems_model == "Thinning Assessment":
-                arcpy.ThinningAssessment_EEMSModels(last_year, input_stands_path, eems_command_file)
+                arcpy.ThinningAssessment_EEMSModels(last_year, input_stands_path, eems_command_file, eems_output_feature_class)
                 eems_lyr_file = eems_lyr_dir + "Thinning_Assessment.lyr"
 
             if eems_model == "Severe Fire Risk":
-                arcpy.SevereFireRisk_EEMSModels(last_year, input_stands_path, eems_command_file)
+                arcpy.SevereFireRisk_EEMSModels(last_year, input_stands_path, eems_command_file, eems_output_feature_class)
                 eems_lyr_file = eems_lyr_dir + "Severe_Fire_Risk.lyr"
 
             if arcpy.Exists(eems_lyr_file):
+                eems_output_gdb = os.path.dirname(eems_output_feature_class) 
+                eems_output_feature_class_name = os.path.basename(eems_output_feature_class) 
                 layer = arcpy.mapping.Layer(eems_lyr_file)
+                # Replace the path to the output feature class within the lyr file.  
+                layer.replaceDataSource(eems_output_gdb, "FILEGDB_WORKSPACE", eems_output_feature_class_name)
                 arcpy.mapping.AddLayer(df, layer, "TOP")
 
         def add_veg_type_fields():
